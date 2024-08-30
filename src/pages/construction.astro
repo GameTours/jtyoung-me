@@ -1,0 +1,27 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+const PageTitle = "Technical Info";
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={PageTitle} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>Technical Info</h1>
+
+			<p>
+               Wow, this site has been a while-in-construction.<br>
+               This site was made by ...
+			</p>
+
+		</main>
+		<Footer />
+	</body>
+</html>

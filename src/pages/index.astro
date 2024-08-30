@@ -1,0 +1,59 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+const PageTitle = "Joe Young | jtyoung.me";
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={PageTitle} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="indextitle">
+			<h1>Hello.</h1>
+				</div>
+			<h2>
+				Nice to see you here.
+				</h2>
+				<h2>
+				I do things...
+			</h2>
+
+
+			<div class="parent">
+				<!-- these photos will eventually be linked out to the 'my work' page. Each will have their individual sections (i.e) portraits and landscapes and wildlife. -->
+				<img src="/img/indexgrid-1.jpg">
+				<img src="/img/indexgrid-2.jpg"> 
+				<img src="/img/indexgrid-3.jpg">
+			</div>
+	
+		</main>
+		<Footer />
+		<style>
+			h2 {
+				font-size: 28px;
+				font-weight: 500;
+				margin-top: 20px;
+				margin-bottom: 20px;
+			}
+			.indextitle {
+				..
+			}
+
+			.parent {
+			margin-top: 50px;
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			grid-template-rows: 1fr;
+			grid-column-gap: 10px;
+			grid-row-gap: 0px;
+			}
+
+		</style>
+	</body>
+</html>
