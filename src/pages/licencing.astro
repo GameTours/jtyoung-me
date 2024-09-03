@@ -2,21 +2,29 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+const PageName = "Licensing";
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<BaseHead title={PageName} ={SITE_DESCRIPTION} />
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1>Licensing information...</h1>
+			<h1>Licensing Information</h1>
 
+			<p> <strong>
+                Right, let's get serious... </strong>
+			</p> 
 			<p>
-                Put info on licencing terms and contact info.
+				The images that are seen on this website (jtyoung.me) are strictly for viewing only on the website. </p>
+				<p>You may not reproduce the images seen here onto any other medium, including social media accounts without the explicit (written) permission of myself.
+				All images are marked with a watermark and this must not be removed from the image.
+			</p>
+			<p>
+				I, Joseph Young along with jtyoung.me hold all copyright to the images seen on this website.
 			</p>
 
 		</main>

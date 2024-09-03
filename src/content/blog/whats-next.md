@@ -1,7 +1,7 @@
 ---
 title: 'Next Steps'
 description: 'What are the next steps for the site now the public release has finally launched?'
-pubDate: 'Aug 30 2024'
+pubDate: 'Sep 06 2024'
 heroImage: '/img/blog/post2hero.png'
 ---
 
