@@ -158,6 +158,20 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"haunted-school-photos.md": {
+	id: "haunted-school-photos.md";
+  slug: "haunted-school-photos";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"version11-clog.md": {
+	id: "version11-clog.md";
+  slug: "version11-clog";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "whats-next.md": {
 	id: "whats-next.md";
   slug: "whats-next";
