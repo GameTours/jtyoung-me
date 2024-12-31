@@ -3,7 +3,7 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-const PageTitle = "Technical Info";
+const PageTitle = "Changelog";
 ---
 
 <!doctype html>
@@ -14,20 +14,64 @@ const PageTitle = "Technical Info";
 	<body>
 		<Header />
 		<main>
-			<h1>Technical Info</h1>
+			<h1>Changelog</h1>
+            <h2>Last updated: Dec 31, 2024 (happy new year!)</h2>
 
+    <!--   TEMPLATE:
+
+            <h3>DATE..</h3>
 			<p>
-               Wow, this site has been a while-in-construction.
+            WHAT WAS DONE,,
 			</p>
-			<p>
-				Whilst I've already began talking about the site on my <a href="/blog/first-post">my first blog post</a>, I think it's important to have one, central location for the full details on the site.
-			</p>
-			<p>
-				This site was built using the Astro framework, which is a very powerful framework when used correctly, which I'm still learning how to do so... You may even recognize the template from the Astro docs – it is the blog template. Although I have modified the template slightly to match my needs.
-			</p>
-			<p>The site is then hosted using the Netlify platform, which has proven to be a big time-saver. I am really pleased with the platform and I would highly recommend them. It's great as the site can be built automatically from commits on the Git repository. This means less work for me having to manage the hosting and maintenance of servers, and more time developing and doing things.</p>
-			<p>I have posted the source of the site on GitHub, should you wish to have a look at the source. <a href="https://github.com/gametours/jtyoung-me" target="_blank">Take a look here...</a></p>
+             -->
+
+            <h3>Dec 31, 2024 [last for 2024]</h3>
+            <p>
+                <ul>
+                <li>Added a change-log page to track website versions and removed blog posts for chaneglogs.</li>
+                <li>Added 2024 in review blog post.</li>
+                </ul>
+            </p>
+
+             <h3>Dec 29, 2024</h3>
+             <p>
+             <ul>
+                <li>Upgraded to newer Astro version due to address vulnerability CVE-2024-56159.</li>
+                <li>Changed index page content slightly.</li>
+             </ul>
+             </p>
+
+
+             <h3>September 22, 2024</h3>
+             <p>
+             <ul>
+                <li>Added some new blog posts (haunted school photoshoot).</li>
+                <li>Slightly modified the text on the 'index' page.</li>
+                <li>Introduction of the 'technical information' page, which provides details on how the site was built and how it runs.</li>
+             </ul>
+             </p>
+
+
+
 		</main>
 		<Footer />
 	</body>
+    <style>
+		/* Override the H2 styles for this page ONLY. */
+		h2 {
+			margin-top: 16px;
+			margin-bottom: 20px;
+			font-size: 26px;
+		}
+        
+        /* Override H3 styles ONLY FOR THIS PAGE: */
+
+        h3 {
+            margin-top: 28px;
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+        
+
+	</style>
 </html>
