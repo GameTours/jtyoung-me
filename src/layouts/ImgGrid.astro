@@ -1,0 +1,24 @@
+---
+// Props passed from the Markdown file
+const { images } = Astro.props;
+---
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+
+  .grid img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+</style>
+
+<div class="grid">
+  {images.map((image) => (
+    <img src={image} alt="Gallery Image" loading="lazy" />
+  ))}
+</div>
