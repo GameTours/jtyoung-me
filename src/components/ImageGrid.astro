@@ -1,77 +1,72 @@
 ---
-/**
- * ImageGrid component
- *
- * Displays a set of photos in a centred grid. Each image is placed in a
- * 500px square cell so portrait and landscape orientations line up neatly.
- * The grid starts as a single column and expands to two columns at 1500px
- * and three columns above 2000px.
- *
- * Props:
- *   images – array of image URLs to display
- *   alt?   – optional alt text for each image (same order as `images`)
- */
-export interface Props {
-  images: string[];
-  alt?: string[];
-}
-const { images, alt = [] } = Astro.props;
+// PhotoGrid.astro
+// Usage: wrap Image components (or <img>/<picture>) as children inside <PhotoGrid> in MDX.
+// The grid enforces square cells, and images are centered and scaled to fit (no stretching).
+const { children } = Astro.props;
 ---
-<div class="image-grid">
-  {images.map((src, i) => (
-    <!-- Wrap each image in a fixed-size cell so they align evenly -->
-    <div class="image-cell" aria-label={alt[i] ?? ''}>
-      <img src={src} alt={alt[i] ?? ''} />
-    </div>
-  ))}
-</div>
-
 <style>
-  /* Grid container: centred with a single 500px column by default */
-  .image-grid {
+  :root {
+    --gap: 1rem;
+    --radius: 8px;
+  }
+
+  .grid {
     display: grid;
-    gap: 0.5rem;
-    justify-content: center;
-    margin: 0 auto;
-    padding: 5px 0;
-    grid-template-columns: 500px;
+    grid-template-columns: 1fr;
+    gap: var(--gap);
+    align-items: stretch;
   }
 
-  /* Expand to two columns on wider screens */
   @media (min-width: 1500px) {
-    .image-grid {
-      grid-template-columns: repeat(2, 500px);
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 
-  /* Three columns for very large screens */
   @media (min-width: 2000px) {
-    .image-grid {
-      grid-template-columns: repeat(3, 500px);
+    .grid {
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 
-  /* Individual cell: fixed-size square crop */
-  .image-cell {
-    width: 500px;
-    aspect-ratio: 1 / 1;
-    overflow: hidden;
-  }
-
-  /* Scale images to fill the cell while preserving aspect ratio */
-  .image-cell img {
+  /* Each child is a square container */
+  .item {
+    position: relative;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    aspect-ratio: 1 / 1; /* keep square cells */
+    overflow: hidden;
+    border-radius: var(--radius);
+    background-color: #f6f6f6; /* visible background when image doesn't fill */
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  /* On small devices let images shrink to the container width */
-  @media (max-width: 800px) {
-    .image-cell {
-      width: 100%;
-    }
-    .image-grid {
-      grid-template-columns: 1fr;
-    }
+  /* Ensure <picture>/<img> content is centered and fits without stretching.
+     We use max-width / max-height so the image keeps native aspect ratio. */
+  .item :global(picture),
+  .item :global(img) {
+    /* allow the element to scale responsively but not exceed container */
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    display: block;
+    object-fit: contain;    /* preserve aspect ratio, don't crop */
+    object-position: center;
+  }
+
+  /* Remove default margins if the wrapped component introduces them */
+  .item :global(picture),
+  .item :global(img) {
+    margin: 0;
+    padding: 0;
+    border: 0;
   }
 </style>
+
+<div class="grid">
+  {children.map((child) => (
+    <div class="item">{child}</div>
+  ))}
+</div>

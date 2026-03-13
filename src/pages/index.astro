@@ -4,6 +4,12 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 const PageTitle = "Joe Young | jtyoung.me";
+import { Image } from "astro:assets";
+
+// I chose to use the Astro image framework in my images. I upload the high-res files and then they will be automatically downsampled where required depending on browser. Much more efficient and an overall better use of resources.
+import indeximg1 from '../images/index/index-1.jpg';
+import indeximg2 from '../images/index/index-2.jpg';
+import indeximg3 from '../images/index/index-3.jpg';
 ---
 
 <!doctype html>
@@ -25,9 +31,9 @@ const PageTitle = "Joe Young | jtyoung.me";
 
 			<div class="parent">
 				<!-- these photos will eventually be linked out to the 'my work' page. Each will have their individual sections (i.e) portraits and landscapes and wildlife. -->
-				<img src="/img/indexgrid-1.jpg">
-				<img src="/img/indexgrid-2.jpg"> 
-				<img src="/img/indexgrid-3.jpg">
+				<Image src={indeximg1} alt="beach" />
+				<Image src={indeximg2} alt="glasgow river looking at the ship" />
+				<Image src={indeximg3} alt="girl dressed in a blue dress by a river, sitting on a rock" />
 			</div>
 	
 		</main>
