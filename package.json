@@ -31,6 +31,6 @@
   },
   "homepage": "https://github.com/GameTours/jtyoung-me#readme",
   "devDependencies": {
-    "wrangler": "^4.73.0"
+    "wrangler": "^4.35.0"
   }
 }
