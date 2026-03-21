@@ -12,9 +12,7 @@
 \
 \
 * These are an example of what can be done with a Debian/Ubuntu type system.*
-apt install git
-apt install node
-apt install npm
+apt install git node npm
 git clone https://github.com/GameTours/jtyoung-me
 cd jtyoung-me
 npm install

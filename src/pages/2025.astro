@@ -1,0 +1,63 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+const PageTitle = "Joe Young | jtyoung.me";
+import { Image } from "astro:assets";
+
+// I chose to use the Astro image framework in my images. I upload the high-res files and then they will be automatically downsampled where required depending on browser. Much more efficient and an overall better use of resources.
+import indeximg1 from '../images/index/index-1.jpg';
+import indeximg2 from '../images/index/index-2.jpg';
+import indeximg3 from '../images/index/index-3.jpg';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={PageTitle} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="indextitle">
+			<h1>Hi,</h1>
+				</div>
+				<h2>Welcome to jtyoung.me</h2>
+				<h2>
+				I do things. 
+			</h2>
+
+
+			<div class="parent">
+				<!-- these photos will eventually be linked out to the 'my work' page. Each will have their individual sections (i.e) portraits and landscapes and wildlife. -->
+				<Image src={indeximg1} alt="beach" />
+				<Image src={indeximg2} alt="glasgow river looking at the ship" />
+				<Image src={indeximg3} alt="girl dressed in a blue dress by a river, sitting on a rock" />
+			</div>
+	
+		</main>
+		<Footer />
+		<style>
+			h2 {
+				font-size: 28px;
+				font-weight: 500;
+				margin-top: 20px;
+				margin-bottom: 20px;
+			}
+		/*	.indextitle {
+				
+			}
+*/
+			.parent {
+			margin-top: 50px;
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			grid-template-rows: 1fr;
+			grid-column-gap: 10px;
+			grid-row-gap: 0px;
+			}
+
+		</style>
+	</body>
+</html>
