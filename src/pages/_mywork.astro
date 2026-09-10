@@ -1,0 +1,139 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { Image } from 'astro:assets';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+type WorkCategory = 'portrait' | 'wildlife' | 'travel' | 'misc';
+
+const categories: { id: WorkCategory; label: string }[] = [
+	{ id: 'portrait', label: 'Portrait' },
+	{ id: 'wildlife', label: 'Wildlife' },
+	{ id: 'travel', label: 'Travel' },
+	{ id: 'misc', label: 'Misc' },
+];
+
+const imageModules = import.meta.glob('../images/mywork/**/*.{jpg,jpeg,png,webp}', {
+	eager: true,
+	import: 'default',
+});
+
+const categoryPreviewImages = categories.map((category) => {
+	const files = Object.entries(imageModules)
+		.map(([path, image]) => ({
+			path,
+			image: image as ImageMetadata,
+		}))
+		.filter(({ path }) => path.includes(`/mywork/${category.id}/`));
+
+	return {
+		...category,
+		preview: files[0]?.image ?? null,
+		count: files.length,
+	};
+});
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`My Work | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="category-grid">
+				{categoryPreviewImages.map((category) => (
+					<a href={`/mywork/${category.id}`} class="category-card">
+						{category.preview ? (
+							<Image
+								src={category.preview}
+								alt={`${category.label} preview`}
+								widths={[320, 640, 960]}
+								sizes="(max-width: 720px) 100vw, 33vw"
+							/>
+						) : (
+							<div class="placeholder">No images yet</div>
+						)}
+						<div class="card-copy">
+							<h2>{category.label}</h2>
+							<p>{category.count} image{category.count === 1 ? '' : 's'}</p>
+						</div>
+					</a>
+				))}
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	main {
+		width: min(1100px, calc(100% - 2em));
+	}
+
+	.category-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1.4rem;
+	}
+
+	.category-card {
+		display: block;
+		background: rgba(255, 255, 255, 0.55);
+		border: 1px solid rgba(var(--black), 0.08);
+		border-radius: 16px;
+		overflow: hidden;
+		box-shadow: 0 10px 28px rgba(82, 0, 177, 0.12);
+		transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+	}
+
+	.category-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 16px 32px rgba(82, 0, 177, 0.16);
+		border-color: transparent;
+	}
+
+	.category-card img,
+	.placeholder {
+		display: block;
+		width: 100%;
+		height: 280px;
+		object-fit: cover;
+	}
+
+	.placeholder {
+		display: grid;
+		place-items: center;
+		background: linear-gradient(135deg, rgba(var(--gray-light), 0.8), rgba(244, 227, 253, 0.8));
+		color: rgb(var(--gray-dark));
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+	}
+
+	.card-copy {
+		padding: 1.1rem 1.2rem 1.2rem;
+		background: linear-gradient(180deg, rgba(255,255,255,0.25), rgba(244, 227, 253, 0.35));
+	}
+
+	.card-copy h2 {
+		margin: 0 0 0.2rem;
+		font-size: clamp(1.5rem, 2vw, 2rem);
+		line-height: 1.1;
+	}
+
+	.card-copy p {
+		margin: 0;
+		color: rgb(var(--gray-dark));
+		font-size: 0.95rem;
+		letter-spacing: 0.02em;
+	}
+
+	@media (max-width: 720px) {
+		.category-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

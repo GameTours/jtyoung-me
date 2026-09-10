@@ -1,0 +1,110 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { Image } from 'astro:assets';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+
+type WorkCategory = 'portrait' | 'wildlife' | 'travel' | 'misc';
+
+export function getStaticPaths() {
+	return ['portrait', 'wildlife', 'travel', 'misc'].map((category) => ({ params: { category } }));
+}
+
+const { category } = Astro.params;
+const selectedCategory = ['portrait', 'wildlife', 'travel', 'misc'].includes(category as WorkCategory)
+	? (category as WorkCategory)
+	: null;
+
+if (!selectedCategory) {
+	throw new Error('Invalid My Work category');
+}
+
+const imageModules = import.meta.glob('../../images/mywork/**/*.{jpg,jpeg,png,webp}', {
+	eager: true,
+	import: 'default',
+});
+
+const images = Object.entries(imageModules)
+	.map(([path, image]) => ({
+		path,
+		image: image as ImageMetadata,
+	}))
+	.filter(({ path }) => path.includes(`/mywork/${selectedCategory}/`))
+	.map(({ image, path }) => ({
+		image,
+		name: path.split('/').at(-1)?.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ') ?? 'Work image',
+	}));
+
+const categoryLabels: Record<WorkCategory, string> = {
+	portrait: 'Portrait',
+	wildlife: 'Wildlife',
+	travel: 'Travel',
+	misc: 'Misc',
+};
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`${categoryLabels[selectedCategory]} | My Work | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="gallery" aria-live="polite">
+				{images.map(({ image, name }) => (
+					<figure>
+						<Image
+							src={image}
+							alt={name}
+							widths={[320, 640, 960, 1200]}
+							sizes="(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw"
+						/>
+					</figure>
+				))}
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	main {
+		width: min(1100px, calc(100% - 2em));
+	}
+
+	.gallery {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1rem;
+	}
+
+	.gallery figure {
+		margin: 0;
+		overflow: hidden;
+		border-radius: 12px;
+		background: rgb(var(--gray-light));
+		border: 1px solid rgba(var(--black), 0.06);
+		box-shadow: 0 10px 24px rgba(82, 0, 177, 0.08);
+	}
+
+	.gallery img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		aspect-ratio: 4 / 3;
+		object-fit: cover;
+		transition: transform 0.2s ease;
+	}
+
+	.gallery figure:hover img {
+		transform: scale(1.02);
+	}
+
+	@media (max-width: 720px) {
+		.		.gallery {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+</style>
